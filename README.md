@@ -18,3 +18,12 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+deploy contract 
+
+```shell
+npx hardhat run scripts/deploy.js --network rinkeby 
+``` 
+
+```shell
+npx hardhat verify YOUR_CONTRACT_ADDRESS --network rinkeby 
+``` 

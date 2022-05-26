@@ -28,6 +28,8 @@ contract MyEpicNFT is ERC721URIStorage {
   string[] secondWords = ["son", "luna", "mars", "earth", "cleek", "bibliokept"];
   string[] thirdWords = ["food", "water", "air", "gas", "solid", "fluid"];
 
+  event NewEpicNFTMinted(address sender, uint256 tokenId);
+
     // I create a function to randomly pick a word from each array.
   function pickRandomFirstWord(uint256 tokenId) public view returns (string memory) {
     // I seed the random generator. More on this in the lesson. 
@@ -61,6 +63,7 @@ contract MyEpicNFT is ERC721URIStorage {
 
   // A function our user will hit to get their NFT.
   function makeAnEpicNFT() public {
+    require(_tokenIds.current() < 50);
     console.log("call this function to gen");
     
     // Get the current tokenId, this starts at 0.
@@ -117,11 +120,17 @@ contract MyEpicNFT is ERC721URIStorage {
 
     // Set the NFTs data.
     // 
-    _setTokenURI(newItemId, finalTokenUri);
+    _setTokenURI(newItemId, "ipfs://QmPMgV3iS4MVHRD1kYAR7L47jbun4DU45u847stKHqhgWj");
 
     console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
 
     // Increment the counter for when the next NFT is minted.
     _tokenIds.increment();
+
+    emit NewEpicNFTMinted(msg.sender, newItemId);
+  }
+
+  function getTotalNFTsMintedSoFar() public view returns (uint256){
+    return _tokenIds.current();
   }
 }
